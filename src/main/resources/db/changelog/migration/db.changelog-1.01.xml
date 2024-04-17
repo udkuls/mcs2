@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="5" author="Pridanov">
+        <setColumnRemarks
+                columnName="id"
+                remarks="Unique identifier obtained from another microservice for each order"
+                tableName="order"/>
+        <setColumnRemarks
+                columnName="total_cost"
+                remarks="The total cost of the order"
+                tableName="order"/>
+        <setColumnRemarks
+                columnName="date_of_order"
+                remarks="The date when the order was placed"
+                tableName="order"/>
+    </changeSet>
+    <changeSet id="6" author="Pridanov">
+        <setColumnRemarks
+                columnName="id"
+                remarks="Unique identifier for each order detail, also part of composite key (id, order_id)"
+                tableName="order_details"/>
+        <setColumnRemarks
+                columnName="order_id"
+                remarks="Foreign key referencing the order table, also part of composite key (id, order_id)"
+                tableName="order_details"/>
+        <setColumnRemarks
+                columnName="product_name"
+                remarks="The name of the product in the order detail"
+                tableName="order_details"/>
+        <setColumnRemarks
+                columnName="count"
+                remarks="The quantity of the product in the order detail"
+                tableName="order_details"/>
+    </changeSet>
+</databaseChangeLog>

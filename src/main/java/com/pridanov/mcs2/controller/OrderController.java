@@ -62,7 +62,10 @@ public class OrderController {
     @Operation(summary = "Get a list of order IDs that do not contain a specified item and were received within a given time period")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of order IDs"),
-            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content)
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "No orders for the selected time period",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ExceptionResponse.class)))
     })
     @GetMapping("/by-date-without-product")
     public ResponseEntity<List<Long>> findByDateWithoutProduct(@RequestParam LocalDate dateFrom,
