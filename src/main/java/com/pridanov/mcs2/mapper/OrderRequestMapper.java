@@ -4,7 +4,6 @@ import com.pridanov.mcs2.entity.Order;
 import com.pridanov.mcs2.entity.dto.OrderRequestDto;
 import org.mapstruct.Mapper;
 
-
 @Mapper(componentModel = "spring")
 public interface OrderRequestMapper {
     OrderRequestDto toDto(Order order);

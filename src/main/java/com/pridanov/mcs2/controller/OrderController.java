@@ -22,9 +22,7 @@ import java.util.List;
 @RequestMapping("/api/v1/orders")
 @Tag(name = "Order Management", description = "Endpoints for managing orders")
 public class OrderController {
-
     private final OrderService orderService;
-
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
@@ -34,9 +32,7 @@ public class OrderController {
             @ApiResponse(responseCode = "200", description = "The new order has been successfully created",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Order.class))),
-            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-            @ApiResponse(responseCode = "409", description = "Conflict: A record with the same ID already exists in the database.", content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ExceptionResponse.class)))
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content)
     })
 
     @PostMapping()

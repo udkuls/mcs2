@@ -3,17 +3,14 @@ package com.pridanov.mcs2.util.handlers;
 import com.pridanov.mcs2.util.dto.ExceptionResponse;
 import com.pridanov.mcs2.util.exceptions.BadParamException;
 import com.pridanov.mcs2.util.exceptions.NotFoundException;
-import com.pridanov.mcs2.util.exceptions.UniqueConstraintException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-
 @RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
-
     @ExceptionHandler()
     private ResponseEntity<ExceptionResponse> handleException(BadParamException e) {
         ExceptionResponse response = new ExceptionResponse(
@@ -30,14 +27,5 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 e.getMessage()
         );
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler()
-    private ResponseEntity<ExceptionResponse> handleException(UniqueConstraintException e) {
-        ExceptionResponse response = new ExceptionResponse(
-                HttpStatus.CONFLICT.toString(),
-                e.getMessage()
-        );
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 }

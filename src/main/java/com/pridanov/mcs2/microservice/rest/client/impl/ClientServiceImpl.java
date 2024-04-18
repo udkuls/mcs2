@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class ClientServiceImpl implements ClientService {
-
     private final RestClient restClient;
     private final RestClientProperties restClientProperties;
 

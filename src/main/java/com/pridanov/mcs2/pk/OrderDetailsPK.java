@@ -1,6 +1,5 @@
 package com.pridanov.mcs2.pk;
 
-
 import com.pridanov.mcs2.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +19,6 @@ public class OrderDetailsPK implements Serializable {
     private static final long serialVersionUID = 2793904337801999319L;
     private Long id;
     private Order order;
-
-
 
     @Override
     public boolean equals(Object o) {

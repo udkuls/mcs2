@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,6 +23,7 @@ public class OrderDetails {
     @Id
     @Column(name = "id")
     private Long id;
+
     @JsonIgnore
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "order_id", referencedColumnName = "id")

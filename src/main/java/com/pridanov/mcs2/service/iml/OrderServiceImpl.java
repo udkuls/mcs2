@@ -9,7 +9,6 @@ import com.pridanov.mcs2.microservice.rest.client.ClientService;
 import com.pridanov.mcs2.repository.OrderRepository;
 import com.pridanov.mcs2.service.OrderService;
 import com.pridanov.mcs2.util.exceptions.NotFoundException;
-import com.pridanov.mcs2.util.exceptions.UniqueConstraintException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,21 +19,33 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService {
-
     private final OrderRepository orderRepository;
     private final ClientService clientService;
     private final OrderRequestMapper orderRequestMapper;
 
-
+    private OrderNumberDto generateUniqueOrderNumber() {
+        OrderNumberDto orderNumberDto = clientService.GetOrderNumber();
+        if(orderRepository.findById(orderNumberDto.getOrderNumber()).isPresent()) {
+            return generateUniqueOrderNumber();
+        }
+        return orderNumberDto;
+    }
 
     @Transactional
     @Override
     public Order newOrder(OrderRequestDto orderRequestDto) {
         Order order = orderRequestMapper.toEntity(orderRequestDto);
-        OrderNumberDto orderNumberDto = clientService.GetOrderNumber();
-        if(orderRepository.findById(orderNumberDto.getOrderNumber()).isPresent()) {
-            throw new UniqueConstraintException("An order with this ID already exists, try again");
-        }
+        OrderNumberDto orderNumberDto = generateUniqueOrderNumber();
+
+//        OrderNumberDto orderNumberDto;
+//        boolean isUnique = false;
+//        do {
+//            orderNumberDto = clientService.GetOrderNumber();
+//            if(!orderRepository.findById(orderNumberDto.getOrderNumber()).isPresent()) {
+//                isUnique = true;
+//            }
+//        } while (!isUnique);
+
         order.setOrderId(orderNumberDto.getOrderNumber());
         order.setDateOfOrder(LocalDate.from(orderNumberDto.getOrderDate()));
         long id = 0L;
@@ -50,7 +61,6 @@ public class OrderServiceImpl implements OrderService {
         List<Order> order = orderRepository.findByPriceAndDate(date);
         if(order.isEmpty()) throw new NotFoundException("No orders for the selected date");
         return order;
-
     }
 
     @Override
@@ -59,8 +69,6 @@ public class OrderServiceImpl implements OrderService {
         if(list.isEmpty()) throw new NotFoundException("No orders for the selected time period");
         return list;
     }
-
-
 }
 
 

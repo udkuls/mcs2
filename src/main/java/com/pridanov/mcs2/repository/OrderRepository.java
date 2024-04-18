@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
-
     @Query(value = """
             SELECT t
             FROM Order t
@@ -34,6 +33,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Long> findByDateWithoutProduct(@Param("dateFrom") LocalDate dateFrom,
                                         @Param("dateTo") LocalDate dateTo,
                                         @Param("productName") String productName);
-
-
 }
